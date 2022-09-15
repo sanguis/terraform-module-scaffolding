@@ -11,6 +11,16 @@ repos:
     - id: detect-private-key
     - id: end-of-file-fixer
 
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.72.1
+  hooks:
+    - id: terraform_fmt
+      args:
+        - --args=-recursive
+    - id: infracost_breakdown
+      args:
+        - --args=--path=./
+      verbose = true
 - repo: https://github.com/gruntwork-io/pre-commit
   rev: v0.1.16 # Get the latest from: https://github.com/gruntwork-io/pre-commit/releases
   hooks:
@@ -19,10 +29,13 @@ repos:
         - "--module"
         - "--config=.tflint.hcl"
     - id: terraform-validate
-    - id: terraform-fmt
 
 - repo: https://github.com/terraform-docs/terraform-docs
   rev: "v0.16.0"
   hooks:
     - id: terraform-docs-system
       args: ["markdown", "--output-file", "README.md", "./"]
+- repo: git://github.com/smian/pre-commit-makefile
+  sha: master
+  hooks:
+    - id: makefile-doc
